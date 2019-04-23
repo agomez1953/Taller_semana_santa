@@ -1,5 +1,5 @@
 from producto_escalar import *
-
+import math
 vectores = {}
 
 def ingresar_vector():
@@ -50,60 +50,62 @@ def suma_vectores():
     mostrar_vectores()
     seleccion2=input()
     resultado=[]
-    contador=0
-    for i in range(len(seleccion1)):
-        resultado.append(vectores[seleccion1][i] + vectores[seleccion2][i])
-        contador+=1
-        print(resultado)
+    for posicion in range(len(vectores[seleccion1])):
+        resultado.append(vectores[seleccion1][posicion]+vectores[seleccion2][posicion])
+    print(resultado)
 def producto_punto():
-    print('Escoja el primer vector para hacer el producto punto')
+    print('Escoja el primer vector')
     mostrar_vectores()
     seleccion1 = input()
-    print('Escoja el segundo vector para hacer el producto punto')
+    print('Escoja el segundo vector')
     mostrar_vectores()
     seleccion2 = input()
-    resultado = []
-    for i in range(0,len(seleccion1),1):
-        print(resultado)
+    producto = []
+    contador=0
+    for posicion in range(len(vectores[seleccion1])):
+        producto.append(vectores[seleccion1][posicion] * vectores[seleccion2][posicion])
+    for resultado in producto:
+        contador=contador+resultado
+    print(contador)
 def mayor_elemento():
-    resultado=0
     print('Escoja el vector para ver el mayor elemento')
     mostrar_vectores()
     seleccion=input()
     print(vectores[seleccion])
     contador=0
-    for arreglo in range(len(seleccion)):
-        if arreglo < contador:
+    for i in vectores[seleccion]:
+        if i > contador:
             contador += 1
-            resultado = contador
-    print(resultado)
+        respuesta = contador
+    print(respuesta)
 def menor_elemento():
-    resultado = 0
-    print('Escoja el vector para ver el mayor elemento')
+    print('Escoja el vector para ver el menor elemento')
     mostrar_vectores()
     seleccion = input()
-    print(vectores[seleccion])
-    contador = 0
-    for arreglo in range(len(vectores[seleccion])):
-        if arreglo < contador:
-            contador += 1
-            resultado = contador
-    print(resultado)
+    contador=0
+    for i in vectores[seleccion]:
+            contador -= 1
+            if i <= contador:
+                i = vectores[seleccion]
+            print(contador)
 def promedio():
     print('Seleccione el arreglo para hacer el promedio')
     mostrar_vectores()
     seleccion=input()
     contador=0
-
     respuesta=0
     for arreglo in vectores[seleccion]:
         contador=contador+arreglo
         respuesta=contador/len(vectores[seleccion])
     print(respuesta)
-
-
 def desviacion_estandar():
-    return 0
+    print('Escoja el vector')
+    mostrar_vectores()
+    seleccion = input()
+    for i in seleccion:
+        resultado=math.sqrt((1/len(seleccion)-1)*(vectores[seleccion][i]-promedio())**2)
+    print(resultado)
+
 def comparar():
     print('Escoja el primer vector para comparar')
     mostrar_vectores()
@@ -111,12 +113,29 @@ def comparar():
     print('Escoja el segundo vector para comparar')
     mostrar_vectores()
     seleccion2 = input()
+    if vectores[seleccion1] == vectores[seleccion2]:
+        print('son iguales')
+    else:
+        print('No son iguales')
 def norma():
-    return 0
+    print('Escoja el primer vector para comparar')
+    mostrar_vectores()
+    seleccion = input()
+    contador = 0
+    for i in vectores[seleccion]:
+        contador = contador+i**2
+    print(math.sqrt(contador))
 def moda():
-    return 0
-def principal():
+    print('Escoja el primer vector para sacar la moda')
+    mostrar_vectores()
+    seleccion=input()
+    contador=0
+    for i in vectores[seleccion]:
+        if vectores[seleccion][i] > contador:
+            contador += i
+            print('La moda es',contador)
 
+def principal():
     MENSAJE = '''Seleccione una opcion:
     0. Salir
     1. Ingresar Vector
@@ -132,10 +151,8 @@ def principal():
     11. Norma
     12. Moda
     '''
-
     while True:
         opcion = input(MENSAJE)
-
         if opcion == '0':
             print('Gracielas')
             break
@@ -166,7 +183,5 @@ def principal():
             moda()
         else:
             print('Seleccione una opcion valida')
-
-
 if __name__ == '__main__':
     principal()
